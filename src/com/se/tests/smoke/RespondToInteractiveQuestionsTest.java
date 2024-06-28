@@ -25,7 +25,7 @@ public class RespondToInteractiveQuestionsTest extends StudentLoginBase {
     }
 
     @Test
-    public void respondToInteractiveQuestions() {
+    public void checkVideoStrictModeSkipping() {
         // Navigate to the video section
         NavigationUtil.navigateToUrl("https://demo.subexpert.com/CourseLectures/OnTopic/OOSE-Labs/5-Projects-on-GitHub");
 
@@ -69,7 +69,7 @@ public class RespondToInteractiveQuestionsTest extends StudentLoginBase {
 
         // Play the video using JavaScript and wait for it to start playing
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("document.querySelector('video').play();");
+
 
 
         WebElement playButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div/div/div[4]/button")));
@@ -101,4 +101,175 @@ public class RespondToInteractiveQuestionsTest extends StudentLoginBase {
 
         System.out.println("Interactive questions responded to and video skip restriction verified successfully.");
     }
+
+    @Test
+    public void respondToInteractiveQuestion(){
+        NavigationUtil.navigateToUrl("https://demo.subexpert.com/CourseLectures/OnTopic/OOSE-Labs/5-Projects-on-GitHub");
+
+        WebDriver driver = TestDriver.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+
+        // Wait for the 3 dots menu to be clickable and click it
+        WebElement threeDotsMenu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[4]/div[3]/div/div[1]/div[4]/div[1]/header/div/div/div[2]/span")));
+        threeDotsMenu.click();
+
+        // Wait for the InVideo text to be clickable and click it
+        WebElement inVideoText = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[4]/div[3]/div/div[1]/div[4]/div[1]/header/div/div/div[1]/span[2]/a[4]")));
+        inVideoText.click();
+
+        // Wait for the video element to be visible
+        WebElement videoElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("invideadiv")));
+        Assert.assertTrue(videoElement.isDisplayed(), "No video element found");
+
+        // Select the strict mode video with interactions
+        WebElement strictModeVideo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='videos']/div/div[2]/div[4]/a")));
+        strictModeVideo.click();
+
+        // Add 5 seconds wait to allow the video to load
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Switch to the iframe context
+        WebElement iframe = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("my_video")));
+        driver.switchTo().frame(iframe);
+
+        // Add 5 seconds wait to allow the video to load
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        // Play the video using JavaScript and wait for it to start playing
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebElement playButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div/div/div[4]/button")));
+        playButton.click();
+
+        try{
+            Thread.sleep(18000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
+
+        driver.switchTo().defaultContent();
+//                WebElement question = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[4]/div[3]/div/div[1]/div[4]/div[1]/div[4]/div/div[3]/div/div[4]/div[4]/div/header/h3")));
+//        Assert.assertEquals(question.getText(), "Question!");
+        WebElement correctOption = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[4]/div[3]/div/div[1]/div[4]/div[1]/div[4]/div/div[3]/div/div[4]/div[4]/div/div/form/div[1]/div/p[2]/input[1]")));
+        correctOption.click();
+
+        WebElement submitButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"btnSubmitAnswer\"]")));
+        submitButton.click();
+}
+
+@Test
+public void respondToInteractiveQuestion_WrongAnswer(){
+    NavigationUtil.navigateToUrl("https://demo.subexpert.com/CourseLectures/OnTopic/OOSE-Labs/5-Projects-on-GitHub");
+
+    WebDriver driver = TestDriver.getDriver();
+    WebDriverWait wait = new WebDriverWait(driver, 20);
+
+    // Wait for the 3 dots menu to be clickable and click it
+    WebElement threeDotsMenu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[4]/div[3]/div/div[1]/div[4]/div[1]/header/div/div/div[2]/span")));
+    threeDotsMenu.click();
+
+    // Wait for the InVideo text to be clickable and click it
+    WebElement inVideoText = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[4]/div[3]/div/div[1]/div[4]/div[1]/header/div/div/div[1]/span[2]/a[4]")));
+    inVideoText.click();
+
+    // Wait for the video element to be visible
+    WebElement videoElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("invideadiv")));
+    Assert.assertTrue(videoElement.isDisplayed(), "No video element found");
+
+    // Select the strict mode video with interactions
+    WebElement strictModeVideo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='videos']/div/div[2]/div[4]/a")));
+    strictModeVideo.click();
+
+    // Add 5 seconds wait to allow the video to load
+    try {
+        Thread.sleep(5000);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+
+    // Switch to the iframe context
+    WebElement iframe = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("my_video")));
+    driver.switchTo().frame(iframe);
+
+    // Add 5 seconds wait to allow the video to load
+    try {
+        Thread.sleep(5000);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+
+
+    // Play the video using JavaScript and wait for it to start playing
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+    WebElement playButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div/div/div[4]/button")));
+    playButton.click();
+
+    try{
+        Thread.sleep(18000);
+    } catch (InterruptedException e){
+        e.printStackTrace();
+    }
+
+    driver.switchTo().defaultContent();
+//                WebElement question = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[4]/div[3]/div/div[1]/div[4]/div[1]/div[4]/div/div[3]/div/div[4]/div[4]/div/header/h3")));
+//        Assert.assertEquals(question.getText(), "Question!");
+    WebElement correctOption = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[4]/div[3]/div/div[1]/div[4]/div[1]/div[4]/div/div[3]/div/div[4]/div[4]/div/div/form/div[1]/div/p[2]/input[1]")));
+    correctOption.click();
+
+    WebElement submitButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"btnSubmitAnswer\"]")));
+    submitButton.click();
+    // if nothing happens, the test will fail
+    Assert.fail("The test should fail if the wrong answer is submitted");
+
+}
+
+@Test
+    public void studentToggleStrictMode(){
+    NavigationUtil.navigateToUrl("https://demo.subexpert.com/CourseLectures/OnTopic/OOSE-Labs/5-Projects-on-GitHub");
+
+    WebDriver driver = TestDriver.getDriver();
+    WebDriverWait wait = new WebDriverWait(driver, 20);
+
+    // Wait for the 3 dots menu to be clickable and click it
+    WebElement threeDotsMenu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[4]/div[3]/div/div[1]/div[4]/div[1]/header/div/div/div[2]/span")));
+    threeDotsMenu.click();
+
+    // Wait for the InVideo text to be clickable and click it
+    WebElement inVideoText = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[4]/div[3]/div/div[1]/div[4]/div[1]/header/div/div/div[1]/span[2]/a[4]")));
+    inVideoText.click();
+
+    // Wait for the video element to be visible
+    WebElement videoElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("invideadiv")));
+    Assert.assertTrue(videoElement.isDisplayed(), "No video element found");
+
+
+    WebElement inVideaMenu = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"inVideaTitleBar\"]/div[1]/span[1]")));
+    inVideaMenu.click();
+
+    WebElement strictModeToggle = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"ivwmbtn\"]")));
+    strictModeToggle.click();
+
+    WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"modaldialog\"]/div/header/h3")));
+    System.out.println(successMessage.getText());
+    WebElement modalDialog = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("modaldialog")));
+    Assert.assertTrue(modalDialog.isDisplayed(), "Modal dialog did not appear");
+    Assert.assertEquals(successMessage.getText(), "Watching Mode");
+
+
+
+
+
+
+
+
+}
+
 }

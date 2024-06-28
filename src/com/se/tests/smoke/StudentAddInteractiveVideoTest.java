@@ -1,6 +1,7 @@
 package com.se.tests.smoke;
 
 import com.se.TestDriver;
+import com.se.rolesbase.StudentLoginBase;
 import com.se.rolesbase.TeacherLoginBase;
 import com.se.utils.NavigationUtil;
 import org.openqa.selenium.By;
@@ -11,18 +12,18 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class AddInteractiveVideoTest extends TeacherLoginBase {
+public class StudentAddInteractiveVideoTest extends StudentLoginBase {
 
-    public AddInteractiveVideoTest() {
+    public StudentAddInteractiveVideoTest() {
         this(false);
     }
 
-    public AddInteractiveVideoTest(boolean tearDownBrowserAfterEachTest) {
+    public StudentAddInteractiveVideoTest(boolean tearDownBrowserAfterEachTest) {
         super(tearDownBrowserAfterEachTest);
     }
 
     @Test
-    public void addVideo() {
+    public void addVideoByStudent_NotAllowed() {
         // Navigate to the specified URL
         NavigationUtil.navigateToUrl("https://demo.subexpert.com/CourseLectures/OnTopic/OOSE-Labs/1-Environment-and-OOPs");
 
@@ -41,22 +42,12 @@ public class AddInteractiveVideoTest extends TeacherLoginBase {
         WebElement addVideoButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='invideadiv']/div/div[1]/div[2]/a")));
         addVideoButton.click();
 
-        // Fill in the form fields
-        WebElement titleField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='Title']")));
-        titleField.sendKeys("Attendance Mapper" + System.currentTimeMillis());
 
-        WebElement cloudStorageLinkField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='CloudSharedLink']")));
-        cloudStorageLinkField.sendKeys("https://drive.google.com/file/d/1LM3mvNnSyrdWveK7-w0gDUQsMAUDEcTF/view?usp=sharing");
+        WebElement ErrorText = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"modaldialog\"]/div/header/h3")));
+        Assert.assertEquals(ErrorText.getText(), "Error");
 
-        // Click the Add button
-        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='addvideoform']/div/div[4]/div/input")));
-        addButton.click();
 
-        // Verify success message
-        WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='addvideoform']/div/div[1]/div/h4")));
-        Assert.assertEquals(successMessage.getText(), "Success!");
-
-        System.out.println("Video added successfully and verified.");
+        System.out.println("Video cant be added by a student.");
     }
 
 }

@@ -24,7 +24,7 @@ public class ViewInteractiveVideoTest extends StudentLoginBase {
     }
 
     @Test
-    public void verifyInteractiveVideoElements() {
+    public void verifyInteractiveVideo() {
         // Navigate to the video section
         NavigationUtil.navigateToUrl("https://demo.subexpert.com/CourseLectures/OnTopic/OOSE-Labs/5-Projects-on-GitHub");
 
