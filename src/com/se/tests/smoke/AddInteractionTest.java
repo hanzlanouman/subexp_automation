@@ -93,6 +93,7 @@ public class AddInteractionTest extends TeacherLoginBase {
 
 
     public void addInteractionUtil(){
+        NavigationUtil.navigateToUrl("https://demo.subexpert.com/CourseLectures/OnTopic/OOSE-Labs/1-Environment-and-OOPs");
         WebDriver driver = TestDriver.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 20);
 
@@ -146,7 +147,6 @@ public class AddInteractionTest extends TeacherLoginBase {
             // If error dialogue appears, fail the test
             //If error dialogue Appears, pass the test
          Assert.assertTrue(errorDialogue.getText().contains("Warning"));
-
         } catch (Exception e) {
             // If no error dialogue appears, pass the test
             System.out.println("Interaction added successfully and verified.");
@@ -155,7 +155,6 @@ public class AddInteractionTest extends TeacherLoginBase {
     @Test
     public void addDuplicateInteraction_NotAllowed(){
         // Navigate to the specified URL
-        NavigationUtil.navigateToUrl("https://demo.subexpert.com/CourseLectures/OnTopic/OOSE-Labs/1-Environment-and-OOPs");
 
         WebDriver driver = TestDriver.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 20);
